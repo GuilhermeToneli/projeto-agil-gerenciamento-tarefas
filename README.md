@@ -24,3 +24,6 @@ organização do fluxo de trabalho da equipe.
 Essa mudança foi incorporada ao escopo sem comprometer o cronograma,
 demonstrando a flexibilidade da metodologia ágil e a adaptação contínua
 às necessidades do cliente.
+
+<!-- ajuste final -->
+
