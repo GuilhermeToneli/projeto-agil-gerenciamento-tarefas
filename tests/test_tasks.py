@@ -1,22 +1,34 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+from app import TaskManager
 import pytest
-from app import create_task, list_tasks, update_task, delete_task
 
-def test_create_task():
-    task = create_task("Estudar Kanban", "Alta")
-    assert task["title"] == "Estudar Kanban"
 
-def test_list_tasks():
-    assert isinstance(list_tasks(), list)
+def test_add_task():
+    manager = TaskManager()
+    manager.add_task("Estudar Python", "Alta")
+    assert len(manager.tasks) == 1
+
+
+def test_add_task_empty_title():
+    manager = TaskManager()
+    with pytest.raises(ValueError):
+        manager.add_task("", "Baixa")
+
 
 def test_update_task():
-    task = create_task("Testar sistema", "Média")
-    updated = update_task(task["id"], new_status="Concluído")
-    assert updated["status"] == "Concluído"
+    manager = TaskManager()
+    manager.add_task("Tarefa", "Média")
+    manager.update_task(0, completed=True)
+    assert manager.tasks[0].completed is True
 
-def test_delete_task():
-    task = create_task("Remover tarefa", "Baixa")
-    assert delete_task(task["id"]) is True
 
-def test_create_task_without_title():
-    with pytest.raises(ValueError):
-        create_task("", "Alta")
+def test_remove_task():
+    manager = TaskManager()
+    manager.add_task("Excluir", "Baixa")
+    manager.remove_task(0)
+    assert len(manager.tasks) == 0
+
